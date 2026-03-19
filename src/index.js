@@ -1,5 +1,6 @@
 import "./styles.css";
 import { handleError } from "./error.js";
+import { CurrentWeather } from "./current-weather.js";
 
 //Global variable for the API key
 const API_KEY = "D22DDZSZ8J58JTVVUXHMVT3PX";
@@ -21,4 +22,6 @@ const safeCallApi = handleError(callApi);
 
 safeCallApi("london").then((data) => {
   console.log(data);
+  const current = new CurrentWeather(data);
+  console.log(current);
 });
