@@ -1,3 +1,5 @@
+import { handleError } from "./error";
+
 export function updateCurrent(data) {
   if (!data) throw new Error("Data undefined");
 
@@ -6,6 +8,17 @@ export function updateCurrent(data) {
 
   const icon = document.querySelector(".current-icon");
   icon.textContent = data.icon;
+
+  const iconImage = document.createElement("img");
+  safeLoadImage(data)
+    .then((response) => {
+      iconImage.src = response;
+    })
+    .catch((e) => {
+      console.log("Failed to load image:", e);
+    });
+
+  icon.append(iconImage);
 
   const description = document.querySelector("#current-description");
   description.textContent = data.description;
@@ -90,3 +103,10 @@ function domHelper(e, c) {
 
   return createElement;
 }
+
+const loadImage = async (data) => {
+  const module = await import(`./images/${data.icon}.png`);
+  return module.default;
+};
+
+const safeLoadImage = handleError(loadImage);

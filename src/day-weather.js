@@ -14,6 +14,28 @@ export class DayWeather {
   }
 }
 
+class Hour {
+  constructor(data, time) {
+    this.time = toTwentyFour(time);
+    this.conditions = data.conditions;
+    this.icon = data.icon;
+    this.precipProb = data.precipprob;
+    this.precipType = data.preciptype;
+    this.temp = data.temp;
+  }
+}
+
+//function that translates time number in to string in 24hr format
+function toTwentyFour(time) {
+  time = Number(time);
+
+  if (time <= 9) {
+    return "0" + time.toString() + ":00";
+  } else {
+    return time.toString() + ":00";
+  }
+}
+
 //function that returns the day of the week depending on the date object
 function getDayOfWeek(data) {
   const date = new Date(data.datetime);
@@ -40,15 +62,4 @@ function createHours(data, day) {
     arr.push(hour);
   }
   return arr;
-}
-
-class Hour {
-  constructor(data, time) {
-    this.time = time;
-    this.conditions = data.conditions;
-    this.icon = data.icon;
-    this.precipProb = data.precipprob;
-    this.precipType = data.preciptype;
-    this.temp = data.temp;
-  }
 }

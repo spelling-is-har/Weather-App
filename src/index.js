@@ -40,7 +40,7 @@ function handleEvent(data) {
   const week = getWeatherForDays(data, 7);
   console.log(week);
   displayWeek(week);
-  displayHours(week[1]);
+  displayHours(week[0]);
   console.table(current);
 }
 
