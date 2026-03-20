@@ -22,7 +22,7 @@ async function callApi(location) {
 const safeCallApi = handleError(callApi);
 
 safeCallApi("london").then((data) => {
-  // console.log(data);
+  console.log(data);
   // const current = new CurrentWeather(data);
   // console.log(current);
 
