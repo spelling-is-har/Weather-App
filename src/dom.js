@@ -33,18 +33,47 @@ function createDay(data) {
   const icon = domHelper("p", "icon");
   icon.textContent = data.icon;
 
+  const date = domHelper("p", "date");
+  date.textContent = data.dateTime;
+
   const tempMin = domHelper("p", "temp-min");
   tempMin.textContent = data.tempMin;
 
   const tempMax = domHelper("p", "temp-min");
   tempMax.textContent = data.tempMax;
 
-  container.append(icon, tempMax, tempMin);
+  container.append(date, icon, tempMax, tempMin);
 
   return container;
 }
 
-//function that takes an element type and a class as strings and returns
+export function displayHours(data) {
+  const hoursContainer = document.querySelector(".hours-container");
+
+  for (let i = 0; i < 24; i++) {
+    const hour = createHour(data);
+    hoursContainer.append(hour);
+  }
+}
+
+function createHour(data) {
+  const hourContainer = domHelper("div", "hour-container");
+
+  const icon = domHelper("p", "icon");
+  icon.textContent = data.icon;
+
+  const date = domHelper("p", "date");
+  date.textContent = data.dateTime;
+
+  const temp = domHelper("p", "temp");
+  temp.textContent = data.temp;
+
+  hourContainer.append(icon, date, temp);
+
+  return hourContainer;
+}
+
+//helper function that takes an element type and a class as strings and returns
 //an element with the class
 function domHelper(e, c) {
   if (!e) throw new Error("Element not defined");

@@ -3,7 +3,7 @@ import { handleError } from "./error.js";
 import { CurrentWeather } from "./current-weather.js";
 import { DayWeather } from "./day-weather.js";
 import { callApi } from "./api-call.js";
-import { updateCurrent, displayWeek } from "./dom.js";
+import { updateCurrent, displayWeek, displayHours } from "./dom.js";
 
 //adds error handling to the api call
 const safeCallApi = handleError(callApi);
@@ -26,17 +26,23 @@ document.querySelector("#location-form").addEventListener("submit", (event) => {
   const location = document.querySelector("#location").value;
   safeCallApi(location)
     .then((data) => {
-      console.log(data);
-      const current = new CurrentWeather(data);
-      updateCurrent(current);
-      const week = getWeatherForDays(data, 7);
-      displayWeek(week);
-      console.table(current);
+      handleEvent(data);
     })
     .catch((e) => {
       console.log("Caught:", e);
     });
 });
+
+function handleEvent(data) {
+  console.log(data);
+  const current = new CurrentWeather(data);
+  updateCurrent(current);
+  const week = getWeatherForDays(data, 7);
+  console.log(week);
+  displayWeek(week);
+  displayHours(week[1]);
+  console.table(current);
+}
 
 // safeCallApi("Paris").then((data) => {
 //   // console.log(data);
