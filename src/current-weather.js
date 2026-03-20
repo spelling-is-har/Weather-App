@@ -6,5 +6,6 @@ export class CurrentWeather {
     this.precipProb = data.currentConditions.precipprob;
     this.precipType = data.currentConditions.preciptype;
     this.temp = data.currentConditions.temp;
+    this.address = data.address;
   }
 }
