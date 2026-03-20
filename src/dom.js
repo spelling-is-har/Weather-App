@@ -33,6 +33,9 @@ function createDay(data) {
   const icon = domHelper("p", "icon");
   icon.textContent = data.icon;
 
+  const day = domHelper("p", "day");
+  day.textContent = data.day;
+
   const date = domHelper("p", "date");
   date.textContent = data.dateTime;
 
@@ -42,33 +45,36 @@ function createDay(data) {
   const tempMax = domHelper("p", "temp-min");
   tempMax.textContent = data.tempMax;
 
-  container.append(date, icon, tempMax, tempMin);
+  container.append(day, date, icon, tempMax, tempMin);
 
   return container;
 }
 
 export function displayHours(data) {
   const hoursContainer = document.querySelector(".hours-container");
+  hoursContainer.innerHTML = "";
 
   for (let i = 0; i < 24; i++) {
-    const hour = createHour(data);
+    const hour = createHour(data.hours[i]);
     hoursContainer.append(hour);
   }
 }
 
 function createHour(data) {
+  console.log("Try this");
+  console.log(data);
   const hourContainer = domHelper("div", "hour-container");
 
   const icon = domHelper("p", "icon");
   icon.textContent = data.icon;
 
-  const date = domHelper("p", "date");
-  date.textContent = data.dateTime;
+  const time = domHelper("p", "time");
+  time.textContent = data.time.toString();
 
   const temp = domHelper("p", "temp");
   temp.textContent = data.temp;
 
-  hourContainer.append(icon, date, temp);
+  hourContainer.append(time, icon, temp);
 
   return hourContainer;
 }
@@ -81,5 +87,6 @@ function domHelper(e, c) {
 
   const createElement = document.createElement(e);
   createElement.classList.add(c);
+
   return createElement;
 }

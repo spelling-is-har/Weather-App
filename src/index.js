@@ -34,7 +34,7 @@ document.querySelector("#location-form").addEventListener("submit", (event) => {
 });
 
 function handleEvent(data) {
-  console.log(data);
+  // console.log(data);
   const current = new CurrentWeather(data);
   updateCurrent(current);
   const week = getWeatherForDays(data, 7);
