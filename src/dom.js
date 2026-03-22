@@ -1,4 +1,4 @@
-import { handleError } from "./error";
+import { safeLoadImage } from "./load-image";
 
 export function updateCurrent(data) {
   if (!data) throw new Error("Data undefined");
@@ -10,6 +10,7 @@ export function updateCurrent(data) {
   icon.textContent = data.icon;
 
   const iconImage = document.createElement("img");
+
   safeLoadImage(data)
     .then((response) => {
       iconImage.src = response;
@@ -33,18 +34,29 @@ export function displayWeek(data) {
   weekContainer.innerHTML = "";
 
   for (let i = 0; i < 7; i++) {
-    const dayContainer = createDay(data[i]);
+    const dayContainer = createDay(data[i], i);
     weekContainer.append(dayContainer);
   }
 
   return weekContainer;
 }
-
+//i is the index to determine what day of the week it it,
 function createDay(data) {
   const container = domHelper("div", "day-container");
+  container;
+  container.addEventListener("click", (event) => {
+    displayHours(data);
+  });
 
-  const icon = domHelper("p", "icon");
-  icon.textContent = data.icon;
+  const iconImage = domHelper("img", "icon");
+
+  safeLoadImage(data)
+    .then((response) => {
+      iconImage.src = response;
+    })
+    .catch((e) => {
+      console.log("Failed to load image:", e);
+    });
 
   const day = domHelper("p", "day");
   day.textContent = data.day;
@@ -58,7 +70,7 @@ function createDay(data) {
   const tempMax = domHelper("p", "temp-min");
   tempMax.textContent = data.tempMax;
 
-  container.append(day, date, icon, tempMax, tempMin);
+  container.append(day, date, iconImage, tempMax, tempMin);
 
   return container;
 }
@@ -78,8 +90,14 @@ function createHour(data) {
   console.log(data);
   const hourContainer = domHelper("div", "hour-container");
 
-  const icon = domHelper("p", "icon");
-  icon.textContent = data.icon;
+  const iconImage = domHelper("img", "icon");
+  safeLoadImage(data)
+    .then((response) => {
+      iconImage.src = response;
+    })
+    .catch((e) => {
+      console.log("Failed to load image:", e);
+    });
 
   const time = domHelper("p", "time");
   time.textContent = data.time.toString();
@@ -87,7 +105,7 @@ function createHour(data) {
   const temp = domHelper("p", "temp");
   temp.textContent = data.temp;
 
-  hourContainer.append(time, icon, temp);
+  hourContainer.append(time, iconImage, temp);
 
   return hourContainer;
 }
@@ -103,10 +121,3 @@ function domHelper(e, c) {
 
   return createElement;
 }
-
-const loadImage = async (data) => {
-  const module = await import(`./images/${data.icon}.png`);
-  return module.default;
-};
-
-const safeLoadImage = handleError(loadImage);
