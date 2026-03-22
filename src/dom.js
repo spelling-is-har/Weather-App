@@ -25,7 +25,7 @@ export function updateCurrent(data) {
   description.textContent = data.description;
 
   const temp = document.querySelector(".current-temp");
-  temp.textContent = data.celsius;
+  temp.textContent = degreeDisplay(data.temp);
 }
 
 export function displayWeek(data) {
@@ -66,11 +66,11 @@ function createDay(data) {
 
   const tempMin = domHelper("p", "temp");
   tempMin.classList.add("min");
-  tempMin.textContent = data.celsius;
+  tempMin.textContent = degreeDisplay(data.tempMin);
 
   const tempMax = domHelper("p", "temp");
   tempMax.classList.add("max");
-  tempMax.textContent = data.celsiusMax;
+  tempMax.textContent = degreeDisplay(data.tempMax);
 
   container.append(day, date, iconImage, tempMax, tempMin);
 
@@ -105,7 +105,7 @@ function createHour(data) {
   time.textContent = data.time.toString();
 
   const temp = domHelper("p", "temp");
-  temp.textContent = data.celsius;
+  temp.textContent = degreeDisplay(data.temp);
 
   hourContainer.append(time, iconImage, temp);
 
@@ -122,4 +122,25 @@ function domHelper(e, c) {
   createElement.classList.add(c);
 
   return createElement;
+}
+
+//function to decide whether to display celsius or fahrenheit
+function degreeDisplay(temp) {
+  const degreeToggle = document.querySelector("#degree-toggle");
+  if (degreeToggle.checked === false) {
+    return getFahrenheit(temp);
+  } else {
+    return getCelsius(temp);
+  }
+}
+
+//converts fahrenheit to celsius, rounds to one decimal place and then appends
+//celsius symbol
+function getCelsius(f) {
+  let c = Number.parseFloat(((f - 32) * 5) / 9).toFixed(1);
+  return c + "°C";
+}
+
+function getFahrenheit(f) {
+  return f + "°F";
 }
