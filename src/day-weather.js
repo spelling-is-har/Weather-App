@@ -8,14 +8,8 @@ export class DayWeather {
     this.precip = data.days[day].precip;
     this.precipType = data.days[day].precipType;
     this.temp = data.days[day].temp;
-    this.celsius = getCelsius(this.temp);
-    this.fahrenheit = getFahrenheit(this.temp);
     this.tempMax = data.days[day].tempmax;
     this.tempMin = data.days[day].tempmin;
-    this.celsiusMax = getCelsius(this.tempMax);
-    this.celsiusMin = getCelsius(this.tempMin);
-    this.fahrenheitMax = getFahrenheit(this.tempMax);
-    this.fahrenheitMin = getFahrenheit(this.tempMin);
     this.hours = createHours(data, day);
   }
 }
@@ -28,8 +22,6 @@ class Hour {
     this.precipProb = data.precipprob;
     this.precipType = data.preciptype;
     this.temp = data.temp;
-    this.celsius = getCelsius(this.temp);
-    this.fahrenheit = getFahrenheit(this.temp);
   }
 }
 
@@ -70,15 +62,4 @@ function createHours(data, day) {
     arr.push(hour);
   }
   return arr;
-}
-
-//converts fahrenheit to celsius, rounds to one decimal place and then appends
-//celsius symbol
-function getCelsius(f) {
-  let c = Number.parseFloat(((f - 32) * 5) / 9).toFixed(1);
-  return c + "°C";
-}
-
-function getFahrenheit(f) {
-  return f + "°F";
 }

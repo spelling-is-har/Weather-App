@@ -120,6 +120,10 @@ body {
   cursor: pointer;
 }
 
+.active-day {
+  background-color: rgb(88, 34, 34);
+}
+
 .day-container:hover {
   transform: translateY(-10px);
 }

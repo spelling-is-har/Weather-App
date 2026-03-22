@@ -28,23 +28,32 @@ export function updateCurrent(data) {
   temp.textContent = degreeDisplay(data.temp);
 }
 
-export function displayWeek(data) {
+export function displayWeek(data, activeDay) {
   const weekContainer = document.querySelector(".week-container");
   //clears weeksContainer for update
   weekContainer.innerHTML = "";
 
-  for (let i = 0; i < 7; i++) {
-    const dayContainer = createDay(data[i], i);
+  for (let dayIndex = 0; dayIndex < 7; dayIndex++) {
+    const dayContainer = createDay(data[dayIndex], dayIndex, activeDay);
     weekContainer.append(dayContainer);
   }
 
   return weekContainer;
 }
+
 //i is the index to determine what day of the week it it,
-function createDay(data) {
+function createDay(data, dayIndex, activeDay) {
+  console.log(`dayIndex: ${dayIndex}, activeDay: ${activeDay}`);
   const container = domHelper("div", "day-container");
-  container;
+  container.dataset.day = dayIndex;
+  if (dayIndex === activeDay) container.classList.add("active-day");
+
   container.addEventListener("click", (event) => {
+    // removes active day class from the previously clicked active day
+    const oldActiveDay = document.querySelector(".active-day");
+    oldActiveDay.classList.remove("active-day");
+
+    container.classList.add("active-day");
     displayHours(data);
   });
 
@@ -88,8 +97,6 @@ export function displayHours(data) {
 }
 
 function createHour(data) {
-  console.log("Try this");
-  console.log(data);
   const hourContainer = domHelper("div", "hour-container");
 
   const iconImage = domHelper("img", "icon");
