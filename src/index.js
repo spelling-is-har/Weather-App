@@ -43,11 +43,3 @@ function handleEvent(data) {
   displayHours(week[0]);
   console.table(current);
 }
-
-// safeCallApi("Paris").then((data) => {
-//   // console.log(data);
-//   // const current = new CurrentWeather(data);
-//   // console.log(current);
-//   // const week = getWeatherForDays(data, 7);
-//   // console.log(week);
-// });

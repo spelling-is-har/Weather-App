@@ -25,7 +25,7 @@ export function updateCurrent(data) {
   description.textContent = data.description;
 
   const temp = document.querySelector(".current-temp");
-  temp.textContent = data.temp;
+  temp.textContent = data.celsius;
 }
 
 export function displayWeek(data) {
@@ -64,11 +64,13 @@ function createDay(data) {
   const date = domHelper("p", "date");
   date.textContent = data.dateTime;
 
-  const tempMin = domHelper("p", "temp-min");
-  tempMin.textContent = data.tempMin;
+  const tempMin = domHelper("p", "temp");
+  tempMin.classList.add("min");
+  tempMin.textContent = data.celsius;
 
-  const tempMax = domHelper("p", "temp-min");
-  tempMax.textContent = data.tempMax;
+  const tempMax = domHelper("p", "temp");
+  tempMax.classList.add("max");
+  tempMax.textContent = data.celsiusMax;
 
   container.append(day, date, iconImage, tempMax, tempMin);
 
@@ -103,7 +105,7 @@ function createHour(data) {
   time.textContent = data.time.toString();
 
   const temp = domHelper("p", "temp");
-  temp.textContent = data.temp;
+  temp.textContent = data.celsius;
 
   hourContainer.append(time, iconImage, temp);
 
