@@ -2,6 +2,7 @@
 export function handleError(fn) {
   return function (...params) {
     return fn(...params).catch(function (err) {
+      alert("Invalid location");
       throw new Error("Error in API call: ", err);
       // console.log("Error in API call:", err);
     });
