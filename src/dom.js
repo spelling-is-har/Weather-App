@@ -8,8 +8,7 @@ export function updateCurrent(data) {
   location.textContent = data.address;
 
   const icon = document.querySelector(".current-icon");
-  icon.textContent = data.icon;
-
+  icon.innerHTML = "";
   const iconImage = document.createElement("img");
 
   safeLoadImage(data)
@@ -25,7 +24,7 @@ export function updateCurrent(data) {
   const description = document.querySelector("#current-description");
   description.textContent = data.description;
 
-  const temp = document.querySelector(".current-temp");
+  const temp = document.querySelector(".temp");
   temp.textContent = degreeDisplay(data.temp);
   temp.dataset.temp = data.temp;
 }

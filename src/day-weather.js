@@ -27,17 +27,6 @@ class Hour {
   }
 }
 
-// //function that translates time number in to string in 24hr format
-// function toTwentyFour(time) {
-//   time = Number(time);
-
-//   if (time <= 9) {
-//     return "0" + time.toString() + ":00";
-//   } else {
-//     return time.toString() + ":00";
-//   }
-// }
-
 function cleanTime(time) {
   return time.slice(0, 5);
 }

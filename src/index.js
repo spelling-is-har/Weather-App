@@ -3,6 +3,17 @@ import { safeCallApi } from "./api-call.js";
 import { getCelsius, getFahrenheit } from "./degrees.js";
 import { processData } from "./process-data.js";
 
+//default to London
+safeCallApi("london")
+  .then((data) => {
+    console.log(data);
+    //supplies an index of 0 to handleEvent because 0 is the default index of day (today)
+    processData(data, 0);
+  })
+  .catch((e) => {
+    console.log("Caught:", e);
+  });
+
 document.querySelector("#location-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const location = document.querySelector("#location").value;

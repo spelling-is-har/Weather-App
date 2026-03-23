@@ -3,6 +3,7 @@ export function getCelsius(f) {
   return c + "°C";
 }
 
+//default temps are in fahrenheit so no conversion needed
 export function getFahrenheit(f) {
   return f + "°F";
 }
