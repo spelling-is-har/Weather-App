@@ -19,4 +19,4 @@ class DisplayState {
   }
 }
 
-export const display = new DisplayState();
+export const displayState = new DisplayState();
