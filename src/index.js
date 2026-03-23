@@ -4,6 +4,7 @@ import { CurrentWeather } from "./current-weather.js";
 import { DayWeather } from "./day-weather.js";
 import { callApi } from "./api-call.js";
 import { updateCurrent, displayWeek, displayHours } from "./dom.js";
+import { displayState } from "./display-state.js";
 
 //adds error handling to the api call
 const safeCallApi = handleError(callApi);
@@ -41,7 +42,6 @@ function handleEvent(data, activeDay) {
   const week = getWeatherForDays(data, 7);
   displayWeek(week, activeDay);
   displayHours(week[activeDay]);
-  console.table(current);
 }
 
 // There is a bug with my active day logic, i think im going to come back to this at a later stage.
@@ -51,11 +51,33 @@ function handleEvent(data, activeDay) {
 //take the toggle out of the api call.
 
 //adds toggle degree display event handler after the data has been retrieved from
-document.querySelector("#degree-toggle").addEventListener("click", (event) => {
-  //finds the active day and gets the index from the dataset.day
-  const activeDay = document.querySelector(".active-day");
-  const activeDayIndex = activeDay.dataset.day;
-  console.log(activeDayIndex);
+const degreeToggle = document.querySelector("#degree-toggle");
 
-  handleEvent(data, activeDayIndex);
+degreeToggle.addEventListener("click", (event) => {
+  //finds the active day and gets the index from the dataset.day
+  // const activeDay = document.querySelector(".active-day");
+  // const activeDayIndex = activeDay.dataset.day;
+  // console.log(activeDayIndex);
+
+  // handleEvent(data, activeDayIndex);
+
+  const tempArr = document.querySelectorAll(".temp");
+  if (degreeToggle.checked === true) {
+    tempArr.forEach(
+      (element) => (element.textContent = getCelsius(element.dataset.temp)),
+    );
+  } else {
+    tempArr.forEach(
+      (element) => (element.textContent = getFahrenheit(element.dataset.temp)),
+    );
+  }
 });
+
+function getCelsius(f) {
+  let c = Number.parseFloat(((f - 32) * 5) / 9).toFixed(1);
+  return c + "°C";
+}
+
+function getFahrenheit(f) {
+  return f + "°F";
+}
