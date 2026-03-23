@@ -90,7 +90,9 @@ export function displayHours(data) {
   const hoursContainer = document.querySelector(".hours-container");
   hoursContainer.innerHTML = "";
 
-  for (let i = 0; i < 24; i++) {
+  //Loops over the length of the hours array. This is NOT set to 24 to account for any possible
+  //daylight savings
+  for (let i = 0; i < data.hours.length; i++) {
     const hour = createHour(data.hours[i]);
     hoursContainer.append(hour);
   }

@@ -26,20 +26,9 @@ document.querySelector("#location-form").addEventListener("submit", (event) => {
   const location = document.querySelector("#location").value;
   safeCallApi(location)
     .then((data) => {
+      console.log(data);
       //supplies an index of 0 to handleEvent because 0 is the default index of day (today)
       handleEvent(data, 0);
-
-      //adds toggle degree display event handler after the data has been retrieved from
-      document
-        .querySelector("#degree-toggle")
-        .addEventListener("click", (event) => {
-          //finds the active day and gets the index from the dataset.day
-          const activeDay = document.querySelector(".active-day");
-          const activeDayIndex = activeDay.dataset.day;
-          console.log(activeDayIndex);
-
-          handleEvent(data, activeDayIndex);
-        });
     })
     .catch((e) => {
       console.log("Caught:", e);
@@ -60,3 +49,13 @@ function handleEvent(data, activeDay) {
 
 //im also adding multiple event listeners to the toggle every time i call the api, i need to
 //take the toggle out of the api call.
+
+//adds toggle degree display event handler after the data has been retrieved from
+document.querySelector("#degree-toggle").addEventListener("click", (event) => {
+  //finds the active day and gets the index from the dataset.day
+  const activeDay = document.querySelector(".active-day");
+  const activeDayIndex = activeDay.dataset.day;
+  console.log(activeDayIndex);
+
+  handleEvent(data, activeDayIndex);
+});

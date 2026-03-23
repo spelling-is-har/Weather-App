@@ -16,7 +16,9 @@ export class DayWeather {
 
 class Hour {
   constructor(data, time) {
-    this.time = toTwentyFour(time);
+    console.log(data, time);
+    // this.time = toTwentyFour(time);
+    this.time = cleanTime(data.datetime);
     this.conditions = data.conditions;
     this.icon = data.icon;
     this.precipProb = data.precipprob;
@@ -25,15 +27,19 @@ class Hour {
   }
 }
 
-//function that translates time number in to string in 24hr format
-function toTwentyFour(time) {
-  time = Number(time);
+// //function that translates time number in to string in 24hr format
+// function toTwentyFour(time) {
+//   time = Number(time);
 
-  if (time <= 9) {
-    return "0" + time.toString() + ":00";
-  } else {
-    return time.toString() + ":00";
-  }
+//   if (time <= 9) {
+//     return "0" + time.toString() + ":00";
+//   } else {
+//     return time.toString() + ":00";
+//   }
+// }
+
+function cleanTime(time) {
+  return time.slice(0, 5);
 }
 
 //function that returns the day of the week depending on the date object
@@ -56,8 +62,9 @@ function getDayOfWeek(data) {
 //function to extract the data needed from each hour of the day and returns an array of hours
 function createHours(data, day) {
   const arr = [];
-  //There are 24 hours in a day, so it loops 24 times
-  for (let i = 0; i < 24; i++) {
+  //Loops over the length of the hours array. This is NOT set to 24 to account for any possible
+  //daylight savings
+  for (let i = 0; i < data.days[day].hours.length; i++) {
     const hour = new Hour(data.days[day].hours[i], i);
     arr.push(hour);
   }
